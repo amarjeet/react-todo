@@ -2,31 +2,36 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    entry    : [
+    entry     : [
         'script!jquery/dist/jquery.min.js',
         'script!jquery-migrate/dist/jquery-migrate.min.js',
         'script!foundation-sites/dist/foundation.min.js',
         './app/app.jsx'
     ],
-    externals: {
+    externals : {
         jquery: 'jQuery'
     },
-    plugins  : [
+    plugins   : [
         new webpack.ProvidePlugin({
             '$'     : 'jquery',
             'jQuery': 'jquery',
             'jquery': 'jquery'
         })
     ],
-    output   : {
+    output    : {
         path    : __dirname,
         filename: './public/bundle.js'
     },
-    resolve  : {
+    resolve   : {
         root      : __dirname,
+        modulesDirectories: [
+            'node_modules',
+            './app/components'
+        ],
         alias     : {
             Main             : 'app/components/Main.jsx',
-            applicationStyles: 'app/styles/app.scss'
+            applicationStyles: 'app/styles/app.scss',
+            TodoApp          : 'app/components/TodoApp.jsx'
         },
         extensions: [
             '',
@@ -34,7 +39,7 @@ module.exports = {
             '.jsx'
         ]
     },
-    module   : {
+    module    : {
         loaders: [
             {
                 loader : 'babel-loader',
@@ -51,5 +56,5 @@ module.exports = {
             path.resolve(__dirname, './node_modules/foundation-sites/scss')
         ]
     },
-    devtool  : 'source-map'
+    devtool   : 'source-map'
 };
