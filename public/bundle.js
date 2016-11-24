@@ -26518,6 +26518,7 @@
 	        };
 	        _this.handleAddTodo = _this.handleAddTodo.bind(_this);
 	        _this.handleSearch = _this.handleSearch.bind(_this);
+	        _this.handleToggle = _this.handleToggle.bind(_this);
 	        return _this;
 	    }
 	
@@ -26529,13 +26530,20 @@
 	                searchText: '',
 	                todos: [{
 	                    id: uuid(),
-	                    text: 'Walk the dog'
+	                    text: 'Walk the dog',
+	                    completed: false
 	                }, {
 	                    id: uuid(),
-	                    text: 'Feed the cat'
+	                    text: 'Feed the cat',
+	                    completed: true
 	                }, {
 	                    id: uuid(),
-	                    text: 'Swim the hippo'
+	                    text: 'Swim the hippo',
+	                    completed: false
+	                }, {
+	                    id: uuid(),
+	                    text: 'Poop the leopard',
+	                    completed: true
 	                }]
 	            };
 	        }
@@ -26545,9 +26553,23 @@
 	            this.setState({
 	                todos: [].concat(_toConsumableArray(this.state.todos), [{
 	                    id: uuid(),
-	                    text: text
+	                    text: text,
+	                    completed: false
 	                }])
 	
+	            });
+	        }
+	    }, {
+	        key: 'handleToggle',
+	        value: function handleToggle(id) {
+	            var updatedTodos = this.state.todos.map(function (todo) {
+	                if (todo.id === id) {
+	                    todo.completed = !todo.completed;
+	                }
+	                return todo;
+	            });
+	            this.setState({
+	                todos: updatedTodos
 	            });
 	        }
 	    }, {
@@ -26568,7 +26590,7 @@
 	                'div',
 	                null,
 	                React.createElement(TodoSearch, { onSearch: this.handleSearch }),
-	                React.createElement(TodoList, { todos: todos }),
+	                React.createElement(TodoList, { todos: todos, onToggle: this.handleToggle }),
 	                React.createElement(AddTodo, { onAddTodo: this.handleAddTodo })
 	            );
 	        }
@@ -30897,11 +30919,13 @@
 	    _createClass(TodoList, [{
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            var todos = this.props.todos;
 	
 	            var renderTodos = function renderTodos() {
 	                return todos.map(function (todo) {
-	                    return React.createElement(Todo, _extends({ key: todo.id }, todo));
+	                    return React.createElement(Todo, _extends({ key: todo.id }, todo, { onToggle: _this2.props.onToggle }));
 	                });
 	            };
 	            return React.createElement(
@@ -30921,7 +30945,7 @@
 /* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -30943,17 +30967,21 @@
 	    }
 	
 	    _createClass(Todo, [{
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
+	            var _this2 = this;
+	
 	            var _props = this.props,
 	                id = _props.id,
-	                text = _props.text;
+	                text = _props.text,
+	                completed = _props.completed;
 	
 	            return React.createElement(
-	                'div',
-	                null,
-	                id,
-	                ' - ',
+	                "div",
+	                { onClick: function onClick() {
+	                        _this2.props.onToggle(id);
+	                    } },
+	                React.createElement("input", { type: "checkbox", checked: completed, onChange: function onChange() {} }),
 	                text
 	            );
 	        }
