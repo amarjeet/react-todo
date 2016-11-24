@@ -1,6 +1,7 @@
 const React = require('react');
 
 const TodoList = require('TodoList');
+const AddTodo = require('AddTodo');
 
 class TodoApp extends React.Component {
     constructor() {
@@ -8,6 +9,7 @@ class TodoApp extends React.Component {
         this.state = {
             todos: this._getInitialStateList()
         };
+        this.handleAddTodo = this.handleAddTodo.bind(this);
     }
 
     _getInitialStateList() {
@@ -27,12 +29,17 @@ class TodoApp extends React.Component {
         ];
     }
 
+    handleAddTodo(text) {
+        alert(`New todo: ${text}`);
+    }
+
     render() {
         const {todos} = this.state;
 
         return (
             <div>
                 <TodoList todos={todos}/>
+                <AddTodo onAddTodo={this.handleAddTodo}/>
             </div>
         );
     }

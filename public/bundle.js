@@ -124,7 +124,7 @@
 	$(document).foundation();
 	
 	// App css
-	__webpack_require__(246);
+	__webpack_require__(247);
 	
 	ReactDOM.render(
 	// <Router history={hashHistory}>
@@ -26499,6 +26499,7 @@
 	var React = __webpack_require__(10);
 	
 	var TodoList = __webpack_require__(244);
+	var AddTodo = __webpack_require__(246);
 	
 	var TodoApp = function (_React$Component) {
 	    _inherits(TodoApp, _React$Component);
@@ -26511,6 +26512,7 @@
 	        _this.state = {
 	            todos: _this._getInitialStateList()
 	        };
+	        _this.handleAddTodo = _this.handleAddTodo.bind(_this);
 	        return _this;
 	    }
 	
@@ -26529,6 +26531,11 @@
 	            }];
 	        }
 	    }, {
+	        key: 'handleAddTodo',
+	        value: function handleAddTodo(text) {
+	            alert('New todo: ' + text);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var todos = this.state.todos;
@@ -26537,7 +26544,8 @@
 	            return React.createElement(
 	                'div',
 	                null,
-	                React.createElement(TodoList, { todos: todos })
+	                React.createElement(TodoList, { todos: todos }),
+	                React.createElement(AddTodo, { onAddTodo: this.handleAddTodo })
 	            );
 	        }
 	    }]);
@@ -26650,13 +26658,78 @@
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(10);
+	
+	var AddTodo = function (_React$Component) {
+	    _inherits(AddTodo, _React$Component);
+	
+	    function AddTodo() {
+	        _classCallCheck(this, AddTodo);
+	
+	        var _this = _possibleConstructorReturn(this, (AddTodo.__proto__ || Object.getPrototypeOf(AddTodo)).call(this));
+	
+	        _this.handleSubmit = _this.handleSubmit.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(AddTodo, [{
+	        key: 'handleSubmit',
+	        value: function handleSubmit(e) {
+	            e.preventDefault();
+	            var todoText = this.refs.todoText.value;
+	            if (todoText.length > 0) {
+	                this.refs.todoText = '';
+	                this.props.onAddTodo(todoText);
+	            } else {
+	                this.refs.todoText.focus();
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                'div',
+	                null,
+	                React.createElement(
+	                    'form',
+	                    { onSubmit: this.handleSubmit },
+	                    React.createElement('input', { type: 'text', ref: 'todoText', placeholder: 'What do you want to do?' })
+	                ),
+	                React.createElement(
+	                    'button',
+	                    { className: 'expanded button' },
+	                    'Add Todo'
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return AddTodo;
+	}(React.Component);
+	
+	module.exports = AddTodo;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(247);
+	var content = __webpack_require__(248);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(249)(content, {});
+	var update = __webpack_require__(250)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26673,10 +26746,10 @@
 	}
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(248)();
+	exports = module.exports = __webpack_require__(249)();
 	// imports
 	
 	
@@ -26687,7 +26760,7 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports) {
 
 	/*
@@ -26743,7 +26816,7 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
