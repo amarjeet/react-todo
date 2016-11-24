@@ -124,7 +124,7 @@
 	$(document).foundation();
 	
 	// App css
-	__webpack_require__(247);
+	__webpack_require__(248);
 	
 	ReactDOM.render(
 	// <Router history={hashHistory}>
@@ -26500,6 +26500,7 @@
 	
 	var TodoList = __webpack_require__(244);
 	var AddTodo = __webpack_require__(246);
+	var TodoSearch = __webpack_require__(247);
 	
 	var TodoApp = function (_React$Component) {
 	    _inherits(TodoApp, _React$Component);
@@ -26510,30 +26511,43 @@
 	        var _this = _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this));
 	
 	        _this.state = {
-	            todos: _this._getInitialStateList()
+	            todos: _this._getInitialStateList().todos
 	        };
 	        _this.handleAddTodo = _this.handleAddTodo.bind(_this);
+	        _this.handleSearch = _this.handleSearch.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(TodoApp, [{
 	        key: '_getInitialStateList',
 	        value: function _getInitialStateList() {
-	            return [{
-	                id: 1,
-	                text: 'Walk the dog'
-	            }, {
-	                id: 2,
-	                text: 'Feed the cat'
-	            }, {
-	                id: 3,
-	                text: 'Swim the hippo'
-	            }];
+	            return {
+	                showCompleted: false,
+	                searchText: '',
+	                todos: [{
+	                    id: 1,
+	                    text: 'Walk the dog'
+	                }, {
+	                    id: 2,
+	                    text: 'Feed the cat'
+	                }, {
+	                    id: 3,
+	                    text: 'Swim the hippo'
+	                }]
+	            };
 	        }
 	    }, {
 	        key: 'handleAddTodo',
 	        value: function handleAddTodo(text) {
 	            alert('New todo: ' + text);
+	        }
+	    }, {
+	        key: 'handleSearch',
+	        value: function handleSearch(showCompleted, searchText) {
+	            this.setState({
+	                showCompleted: showCompleted,
+	                searchText: searchText.toLowerCase()
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -26544,6 +26558,7 @@
 	            return React.createElement(
 	                'div',
 	                null,
+	                React.createElement(TodoSearch, { onSearch: this.handleSearch }),
 	                React.createElement(TodoList, { todos: todos }),
 	                React.createElement(AddTodo, { onAddTodo: this.handleAddTodo })
 	            );
@@ -26723,13 +26738,79 @@
 /* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(10);
+	
+	var TodoSearch = function (_React$Component) {
+	    _inherits(TodoSearch, _React$Component);
+	
+	    function TodoSearch() {
+	        _classCallCheck(this, TodoSearch);
+	
+	        var _this = _possibleConstructorReturn(this, (TodoSearch.__proto__ || Object.getPrototypeOf(TodoSearch)).call(this));
+	
+	        _this.handleSearch = _this.handleSearch.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(TodoSearch, [{
+	        key: "handleSearch",
+	        value: function handleSearch() {
+	            var showCompleted = this.refs.showCompleted.checked;
+	            var searchText = this.refs.searchText.value;
+	
+	            this.props.onSearch(showCompleted, searchText);
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return React.createElement(
+	                "div",
+	                null,
+	                React.createElement(
+	                    "div",
+	                    { className: "" },
+	                    React.createElement("input", { type: "search", ref: "searchText", placeholder: "Search todos", onChange: this.handleSearch })
+	                ),
+	                React.createElement(
+	                    "div",
+	                    null,
+	                    React.createElement(
+	                        "label",
+	                        null,
+	                        React.createElement("input", { type: "checkbox", ref: "showCompleted", onChange: this.handleSearch }),
+	                        "Show completed Todos"
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return TodoSearch;
+	}(React.Component);
+	
+	module.exports = TodoSearch;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(248);
+	var content = __webpack_require__(249);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(250)(content, {});
+	var update = __webpack_require__(251)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26746,10 +26827,10 @@
 	}
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(249)();
+	exports = module.exports = __webpack_require__(250)();
 	// imports
 	
 	
@@ -26760,7 +26841,7 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports) {
 
 	/*
@@ -26816,7 +26897,7 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
