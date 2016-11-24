@@ -11,7 +11,8 @@ class AddTodo extends React.Component {
         e.preventDefault();
         const todoText = this.refs.todoText.value;
         if (todoText.length > 0) {
-            this.refs.todoText = '';
+            console.log(todoText);
+            this.refs.todoText.value = '';
             this.props.onAddTodo(todoText);
         } else {
             this.refs.todoText.focus();

@@ -15,6 +15,7 @@
     "foundation-sites": "^6.2.4",
     "jquery": "^3.1.1",
     "jquery-migrate": "^3.0.0",
+    "node-uuid": "^1.4.7",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^3.0.0"
