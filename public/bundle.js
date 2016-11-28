@@ -26504,6 +26504,7 @@
 	var TodoList = __webpack_require__(267);
 	var AddTodo = __webpack_require__(269);
 	var TodoSearch = __webpack_require__(270);
+	var TodoAPI = __webpack_require__(275);
 	
 	var TodoApp = function (_React$Component) {
 	    _inherits(TodoApp, _React$Component);
@@ -26528,24 +26529,13 @@
 	            return {
 	                showCompleted: false,
 	                searchText: '',
-	                todos: [{
-	                    id: uuid(),
-	                    text: 'Walk the dog',
-	                    completed: false
-	                }, {
-	                    id: uuid(),
-	                    text: 'Feed the cat',
-	                    completed: true
-	                }, {
-	                    id: uuid(),
-	                    text: 'Swim the hippo',
-	                    completed: false
-	                }, {
-	                    id: uuid(),
-	                    text: 'Poop the leopard',
-	                    completed: true
-	                }]
+	                todos: TodoAPI.getTodos()
 	            };
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            TodoAPI.setTodos(this.state.todos);
 	        }
 	    }, {
 	        key: 'handleAddTodo',
@@ -31471,6 +31461,31 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var $ = __webpack_require__(9);
+	module.exports = {
+	    setTodos: function setTodos(todos) {
+	        if ($.isArray(todos)) {
+	            localStorage.setItem('todos', JSON.stringify(todos));
+	            return todos;
+	        }
+	    },
+	    getTodos: function getTodos() {
+	        var stringTodos = localStorage.getItem('todos');
+	        var todos = [];
+	        try {
+	            todos = JSON.parse(stringTodos);
+	        } catch (e) {}
+	
+	        return $.isArray(todos) ? todos : [];
+	    }
+	};
 
 /***/ }
 /******/ ]);
