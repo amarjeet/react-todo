@@ -124,7 +124,7 @@
 	$(document).foundation();
 	
 	// App css
-	__webpack_require__(271);
+	__webpack_require__(272);
 	
 	ReactDOM.render(
 	// <Router history={hashHistory}>
@@ -26504,7 +26504,7 @@
 	var TodoList = __webpack_require__(267);
 	var AddTodo = __webpack_require__(269);
 	var TodoSearch = __webpack_require__(270);
-	var TodoAPI = __webpack_require__(275);
+	var TodoAPI = __webpack_require__(271);
 	
 	var TodoApp = function (_React$Component) {
 	    _inherits(TodoApp, _React$Component);
@@ -26573,14 +26573,18 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var todos = this.state.todos;
+	            var _state = this.state,
+	                todos = _state.todos,
+	                showCompleted = _state.showCompleted,
+	                searchText = _state.searchText;
 	
+	            var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 	
 	            return React.createElement(
 	                'div',
 	                null,
 	                React.createElement(TodoSearch, { onSearch: this.handleSearch }),
-	                React.createElement(TodoList, { todos: todos, onToggle: this.handleToggle }),
+	                React.createElement(TodoList, { todos: filteredTodos, onToggle: this.handleToggle }),
 	                React.createElement(AddTodo, { onAddTodo: this.handleAddTodo })
 	            );
 	        }
@@ -31016,7 +31020,6 @@
 	            e.preventDefault();
 	            var todoText = this.refs.todoText.value;
 	            if (todoText.length > 0) {
-	                console.log(todoText);
 	                this.refs.todoText.value = '';
 	                this.props.onAddTodo(todoText);
 	            } else {
@@ -31118,13 +31121,70 @@
 /* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	var $ = __webpack_require__(9);
+	module.exports = {
+	    setTodos: function setTodos(todos) {
+	        if ($.isArray(todos)) {
+	            localStorage.setItem('todos', JSON.stringify(todos));
+	            return todos;
+	        }
+	    },
+	
+	    getTodos: function getTodos() {
+	        var stringTodos = localStorage.getItem('todos');
+	        var todos = [];
+	        try {
+	            todos = JSON.parse(stringTodos);
+	        } catch (e) {}
+	
+	        return $.isArray(todos) ? todos : [];
+	    },
+	
+	    filterTodos: function filterTodos(todos, showCompleted, searchText) {
+	        var filteredTodos = todos;
+	
+	        // Filter by showCompleted
+	        filteredTodos = filteredTodos.filter(function (todo) {
+	            return !todo.completed || showCompleted;
+	        });
+	
+	        // Filter by searchText
+	        filteredTodos = filteredTodos.filter(function (todo) {
+	            if (searchText === undefined || searchText === null || searchText.trim() === '') {
+	                return true;
+	            } else {
+	                return todo.text.toLowerCase().includes(searchText.toLowerCase());
+	            }
+	        });
+	
+	        // Sort incomplete todos on top
+	        filteredTodos.sort(function (a, b) {
+	            if (!a.completed && b.completed) {
+	                return -1;
+	            } else if (a.completed && !b.completed) {
+	                return 1;
+	            } else {
+	                return 0;
+	            }
+	        });
+	
+	        return filteredTodos;
+	    }
+	};
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(272);
+	var content = __webpack_require__(273);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(274)(content, {});
+	var update = __webpack_require__(275)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -31141,10 +31201,10 @@
 	}
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(273)();
+	exports = module.exports = __webpack_require__(274)();
 	// imports
 	
 	
@@ -31155,7 +31215,7 @@
 
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports) {
 
 	/*
@@ -31211,7 +31271,7 @@
 
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -31461,31 +31521,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var $ = __webpack_require__(9);
-	module.exports = {
-	    setTodos: function setTodos(todos) {
-	        if ($.isArray(todos)) {
-	            localStorage.setItem('todos', JSON.stringify(todos));
-	            return todos;
-	        }
-	    },
-	    getTodos: function getTodos() {
-	        var stringTodos = localStorage.getItem('todos');
-	        var todos = [];
-	        try {
-	            todos = JSON.parse(stringTodos);
-	        } catch (e) {}
-	
-	        return $.isArray(todos) ? todos : [];
-	    }
-	};
 
 /***/ }
 /******/ ]);
