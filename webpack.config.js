@@ -33,7 +33,8 @@ module.exports = {
             Main             : 'app/components/Main.jsx',
             applicationStyles: 'app/styles/app.scss',
             TodoApp          : 'app/components/TodoApp.jsx',
-            actions          : 'app/actions/actions.jsx'
+            actions          : 'app/actions/actions.jsx',
+            reducers         : 'app/reducers/reducers.jsx'
         },
         extensions        : [
             '',
