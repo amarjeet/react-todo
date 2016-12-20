@@ -23,18 +23,19 @@ module.exports = {
         filename: './public/bundle.js'
     },
     resolve   : {
-        root      : __dirname,
+        root              : __dirname,
         modulesDirectories: [
             'node_modules',
             './app/components',
             './app/api',
         ],
-        alias     : {
+        alias             : {
             Main             : 'app/components/Main.jsx',
             applicationStyles: 'app/styles/app.scss',
-            TodoApp          : 'app/components/TodoApp.jsx'
+            TodoApp          : 'app/components/TodoApp.jsx',
+            actions          : 'app/actions/actions.jsx'
         },
-        extensions: [
+        extensions        : [
             '',
             '.js',
             '.jsx'
