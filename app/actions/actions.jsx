@@ -12,7 +12,7 @@ export let addTodo = (text) => {
     };
 };
 
-export let toggleShowCompleted = (showCompleted) => {
+export let showCompleted = (showCompleted) => {
     return {
         type: 'TOGGLE_SHOW_COMPLETED'
     };
@@ -37,7 +37,7 @@ export let toggleTodo = (id) => {
 // let actions = [
 //     {actionFunction: 'setSearchText', type: 'SET_SEARCH_TEXT', propName: ['searchText']},
 //     {actionFunction: 'addTodo', type: 'ADD_TODO', propName: ['text']},
-//     {actionFunction: 'toggleShowCompleted', type: 'TOGGLE_SHOW_COMPLETED', propName: ['showCompleted']},
+//     {actionFunction: 'showCompleted', type: 'TOGGLE_SHOW_COMPLETED', propName: ['showCompleted']},
 //     {actionFunction: 'toggleTodo', type: 'TOGGLE_TODO', propName: ['completed']},
 // ];
 //
